@@ -15,11 +15,16 @@ io.on('connection',(socket)=>{
 
 	socket.emit('newMessage',{
 		from:'josikakar',
-		text:'How you doin?'
+		text:'How you doin?',
+		createdAt: 123123
 	});
 
 	socket.on('createMessage', function (msg){
 		console.log('create Message',msg);
+		io.emit('newMessage',{
+			from:msg.from,
+			text:msg.text
+		})
 	})
 
 	socket.on('disconnect',()=>{

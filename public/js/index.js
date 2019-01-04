@@ -5,7 +5,7 @@ var socket=io();
 
 		socket.emit('createMessage',{
 			from:'ritvik',
-			text:'I am doing good'
+			text:"I am doing good"
 		});
 	});
 
