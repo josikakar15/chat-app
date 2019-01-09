@@ -1,3 +1,4 @@
+
 var socket=io();
 
 	socket.on('connect',function (){
@@ -15,14 +16,16 @@ var socket=io();
 
 	socket.on('newMessage', function (msg){
 		var li=jQuery("<li></li>");
-		li.text(`${msg.from}:${msg.text}`);
+		var formattedTime=moment(msg.createdAt).format('h:mm a');
+		li.text(`${msg.from} ${formattedTime} :${msg.text}`);
 		jQuery("#messages").append(li);
 	});
 
 	socket.on('newLocationMessage', function(msg){
 		var li=jQuery("<li></li>");
 		var a=jQuery("<a target=_blank>Get my location</a>");
-		li.text(`${msg.from}:`);
+		var formattedTime=moment(msg.createdAt).format('h:mm a');
+		li.text(`${msg.from} ${formattedTime} :`);
 		a.attr('href',msg.url);
 		li.append(a);
 		jQuery('#messages').append(li);
