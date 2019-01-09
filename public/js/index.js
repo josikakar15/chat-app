@@ -15,20 +15,28 @@ var socket=io();
 	});
 
 	socket.on('newMessage', function (msg){
-		var li=jQuery("<li></li>");
 		var formattedTime=moment(msg.createdAt).format('h:mm a');
-		li.text(`${msg.from} ${formattedTime} :${msg.text}`);
-		jQuery("#messages").append(li);
+		var message=jQuery("#message-template").html();
+		var html=Mustache.render(message, {
+			text:msg.text,
+			from:msg.from,
+			createdAt:formattedTime
+		});
+		jQuery('#messages').append(html);
+		
 	});
 
 	socket.on('newLocationMessage', function(msg){
-		var li=jQuery("<li></li>");
-		var a=jQuery("<a target=_blank>Get my location</a>");
 		var formattedTime=moment(msg.createdAt).format('h:mm a');
-		li.text(`${msg.from} ${formattedTime} :`);
-		a.attr('href',msg.url);
-		li.append(a);
-		jQuery('#messages').append(li);
+		var message=jQuery("#location-message-template").html();
+		var html=Mustache.render(message, {
+			from:msg.from,
+			createdAt:formattedTime,
+			url:msg.url
+		});
+		jQuery('#messages').append(html);
+
+		
 	});
 
 	
